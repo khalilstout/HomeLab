@@ -3,26 +3,25 @@ kind: Application
 metadata:
   name: longhorn
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-options: SkipHooks=true
 spec:
   project: default
   sources:
-    # ON GARDE JUSTE HELM (Le logiciel officiel)
     - chart: longhorn
       repoURL: https://charts.longhorn.io
       targetRevision: 1.5.3
       helm:
         parameters:
         - name: persistence.defaultClassReplicaCount
-          value: "1"
-        - name: preUpgradeChecker.jobEnabled
+          value: "1" 
+        - name: preUpgradeChecker.jobEnabled 
           value: "false"
-
+    - repoURL: https://github.com/khalilstout/HomeLab.git
+      targetRevision: HEAD
+      path: longhorn 
+      
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
-    
   syncPolicy:
     automated:
       prune: true
@@ -30,3 +29,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - SkipHooks=true
+      - ServerSideApply=true
