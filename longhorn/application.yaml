@@ -13,7 +13,8 @@ spec:
         parameters:
         - name: persistence.defaultClassReplicaCount
           value: "1" 
-
+        - name: preUpgradeChecker.jobEnabled 
+          value: "false"
     - repoURL: https://github.com/khalilstout/HomeLab.git
       targetRevision: HEAD
       path: longhorn 
